@@ -22,6 +22,11 @@ extends Node
 
 var current_state: SimpleState: ## The state that is currently active. Must be a child node.
 	set(new_state):
+		# If in the editor, change the value without switching states.
+		if Engine.is_editor_hint():
+			current_state == new_state
+			return
+			
 		# Do nothing if the current and new states are the same.
 		if current_state == new_state:
 			push_warning("The current and new states are the same. No switch was triggered.")
