@@ -17,8 +17,7 @@ signal deactivated()
 	set(_value):
 		if not Engine.is_editor_hint():
 			return
-		
-		# FIXME NOT ADDING TO THE TREE
+		# Make a new simple state if in the editor
 		var new_state: SimpleState = SimpleState.new()
 		new_state.name = "SimpleState"
 		add_child(new_state, true)
