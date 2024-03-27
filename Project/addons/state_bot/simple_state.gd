@@ -61,11 +61,36 @@ func get_bot() -> StateBot:
 	return null
 
 
-## Switches the [member StateBot.current_state] to [member next_state].
-## If no [member next_state] is defined, it deactivates the [StateBot].
+## Switches the [member StateBot.current_state] to [method get_next] and returns it.
 ## If a [SimpleState] is passed to the [param next] parameter, 
-## the state changes to that state, and [member next_state] is also set to that state.
-func switch_to_next(next: SimpleState = next_state) -> void:
+## [member next_state] is set to that state and the state is switched to [param next].
+## See also [method get_next] to see how the next state is chosen.
+func switch_to_next(next: SimpleState = next_state) -> SimpleState:
+	# Get the next state
 	next_state = next
-	if is_instance_valid(get_bot()):
-		get_bot().current_state = next
+	var return_value: SimpleState = get_next()
+	# Switch to and return the next state
+	get_bot().current_state = return_value
+	return return_value
+
+
+## Returns [member next_state].
+## If no [member next_state] is defined, the next state in the hierarchy (top to bottom) is used.
+## See [method StateBot.get_all_states] to see how the next state in the hierarchy is chosen.
+## This is mostly useful when no [member next_state] has been defined.
+## Otherwise, using [member next_state] directly is best.
+func get_next() -> SimpleState:
+	var bot: StateBot = get_bot()
+	# If there is no StateBot, cancel
+	if not is_instance_valid(bot):
+		return null
+	# If there is no next state, find the next state
+	if not is_instance_valid(next_state):
+		var all_states: Array[SimpleState] = bot.get_all_states()
+		var current_index: int = all_states.find(bot.current_state)
+		var next: SimpleState = all_states[(current_index + 1) % all_states.size()]
+		# Return the next state (from the hierarchy or variable)
+		return next
+	# Otherwise, return the next state
+	else:
+		return next_state

@@ -43,11 +43,20 @@ var current_state: SimpleState = null:
 			
 		# Do nothing if the current and new states are the same.
 		if current_state == new_state:
+			if debug_mode:
+				print(str(self) + " tried to switch to the current state, " + str(current_state) +
+				", so nothing happened.")
 			return
+		
+		var old_state: SimpleState = current_state
+		
+		# Send a debug message if debug mode is enabled.
+		if debug_mode:
+			print(str(self) + " switched states from " + str(old_state) + " to " + 
+			str(new_state))
 		
 		# Exit the old state and enter the new state.
 		# The variable is set after exit and before enter.
-		var old_state: SimpleState = current_state
 		if is_instance_valid(current_state):
 			current_state._exit_state(new_state)
 		current_state = new_state
@@ -58,14 +67,11 @@ var current_state: SimpleState = null:
 		state_changed.emit(old_state, new_state)
 		if new_state == null:
 			if debug_mode:
-				print("The StateBot named " + str(name) + " was deactivated.")
+				print(str(self) + " was deactivated.")
 			deactivated.emit()
 			return
 		
-		# Send a debug message if debug mode is enabled.
-		if debug_mode:
-			print("The state of " + name + " was changed from " + str(old_state) + " to " + 
-			str(new_state))
+
 
 
 func _ready():
@@ -119,6 +125,8 @@ func get_state(state_name: String = "") -> SimpleState:
 
 
 ## Returns all [SimpleState]s that are children, grandchildren, or descendents of this [StateBot].
+## This function returns the [SimpleState]s in order from top to bottom in the hierarchy.
+## See also [method Bonuses.get_all_children].
 func get_all_states() -> Array[SimpleState]:
 	# Get all of the children of this StateBot.
 	var states: Array[SimpleState] = []

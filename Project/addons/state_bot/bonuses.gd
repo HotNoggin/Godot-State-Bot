@@ -5,7 +5,8 @@ extends RefCounted
 
 
 ## Returns all of the children of [param node].
-## You can include more children by setting [param array]
+## You can include more children by setting [param array].
+## This returns the children in order from top to bottom.
 static func get_all_children(node: Node, array: Array = []) -> Array[Node]:
 	array.push_back(node)
 	for child in node.get_children():
