@@ -1,3 +1,11 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
 config_version=5
 
 [application]
@@ -5,12 +13,12 @@ config_version=5
 config/name="StateBot"
 config/description="A versatile, easy to use finite state machine addon."
 config/version="1.0.1"
+config/tags=PackedStringArray("addon")
 run/main_scene="res://addons/state_bot/example/example_scene.tscn"
 config/features=PackedStringArray("4.2")
 boot_splash/bg_color=Color(0.0745098, 0.0745098, 0.0745098, 1)
 boot_splash/image="res://addons/state_bot/state_bot_icon.png"
 config/icon="res://addons/state_bot/state_bot_icon.png"
-config/tags=PackedStringArray("addon")
 
 [editor_plugins]
 
