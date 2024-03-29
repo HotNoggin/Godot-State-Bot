@@ -6,8 +6,12 @@ class_name SimpleState
 ## A [SimpleState] must have a [StateBot] ancestor.
 extends Node
 
+signal entered
+signal exited
+
 ## The state to switch to when [method StateBot.next_state] is called.
 @export var next_state: SimpleState
+
 
 func _enter_tree():
 	# Detach this script from the node and instead give the developer a new script to work in.

@@ -8,6 +8,7 @@ extends Node
 ## Emitted when the state is changed.
 ## The [param old_state] and [param new_state] are passed as parameters.
 signal state_changed(old_state: SimpleState, new_state: SimpleState)
+
 ## Emitted when the state is set to [code]null[/code], either directly or through a method.
 signal deactivated()
 
@@ -25,6 +26,11 @@ signal deactivated()
 
 ## If [member debug_mode] is on, debug messages will be printed to the console when states change.
 @export var debug_mode: bool = false
+
+## A node to control remotely from inside of states. This must be set manually,
+## either in the inspector or through code.
+## This can be accessed from a [SimpleState] using [member SimpleState.get_bot().puppet]
+@export var puppet: Node = null
 
 ## A single [SimpleState] that is set to be automatically entered on ready, 
 ## and when [method restart] is called.
@@ -51,16 +57,18 @@ var current_state: SimpleState = null:
 		
 		# Send a debug message if debug mode is enabled.
 		if debug_mode:
-			print(str(self) + " switched states from " + str(old_state) + " to " + 
+			print(str(self) + " is switching states from " + str(old_state) + " to " + 
 			str(new_state))
 		
 		# Exit the old state and enter the new state.
 		# The variable is set after exit and before enter.
 		if is_instance_valid(current_state):
 			current_state._exit_state(new_state)
+			current_state.exited.emit()
 		current_state = new_state
 		if is_instance_valid(new_state):
 			new_state._enter_state(old_state)
+			new_state.entered.emit()
 		
 		# Emit signals, send a debug message if debug mode is enabeled.
 		state_changed.emit(old_state, new_state)
