@@ -84,7 +84,7 @@ var current_state: SimpleState = null:
 func _ready():
 	if Engine.is_editor_hint():
 		return
-	restart()
+	restart.call_deferred()
 
 
 func _process(delta):
