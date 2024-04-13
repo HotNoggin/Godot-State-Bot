@@ -8,7 +8,4 @@ func _enter_tree():
 
 
 func _exit_tree():
-	remove_custom_type("StateBot")
-	remove_custom_type("SimpleState")
-	remove_custom_type("Bonuses")
 	print_rich("[color=medium_purple]You've deactivated the StateBot addon.")
