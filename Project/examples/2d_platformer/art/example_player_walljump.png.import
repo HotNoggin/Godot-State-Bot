@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkrb50jn6yk0e"
-path="res://.godot/imported/bonuses.png-017e502a909ead5716bc8e01b7980882.ctex"
+uid="uid://ccf1jyyhlu1ys"
+path="res://.godot/imported/example_player_walljump.png-86f1f6598fe5cf8e34482074f46fca21.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/state_bot/bonuses.png"
-dest_files=["res://.godot/imported/bonuses.png-017e502a909ead5716bc8e01b7980882.ctex"]
+source_file="res://examples/2d_platformer/art/example_player_walljump.png"
+dest_files=["res://.godot/imported/example_player_walljump.png-86f1f6598fe5cf8e34482074f46fca21.ctex"]
 
 [params]
 

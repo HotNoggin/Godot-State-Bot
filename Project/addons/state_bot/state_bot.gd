@@ -1,5 +1,5 @@
 @tool
-@icon("res://addons/state_bot/state_bot_icon.png")
+@icon("res://addons/state_bot/state_bot_icon.svg")
 class_name StateBot
 ## Holds a number of [SimpleState]s as children and manages which one is active.
 ## It has a number of functions to handle state switching and management.
@@ -12,21 +12,6 @@ signal state_changed(old_state: SimpleState, new_state: SimpleState)
 ## Emitted when the state is set to [code]null[/code], either directly or through a method.
 signal deactivated()
 
-## Press "Create" to make a new [SimpleState].
-## Only useful in the editor's inspector, not through code.
-@export_flags("Create") var _create_new_simple_state : int = 0:
-	set(_value):
-		if not Engine.is_editor_hint():
-			return
-		# Make a new simple state if in the editor
-		var new_state: SimpleState = SimpleState.new()
-		new_state.name = "SimpleState"
-		add_child(new_state, true)
-		new_state.set_owner(get_tree().edited_scene_root)
-
-## If [member debug_mode] is on, debug messages will be printed to the console when states change.
-@export var debug_mode: bool = false
-
 ## A node to control remotely from inside of states. This must be set manually,
 ## either in the inspector or through code.
 ## This can be accessed from a [SimpleState] using [member SimpleState.get_bot().puppet]
@@ -36,6 +21,21 @@ signal deactivated()
 ## and when [method restart] is called.
 ## This can be changed while the game is runnning to change what state is entered on [method restart].
 @export var starting_state: SimpleState = null
+
+## If [member debug_mode] is on, debug messages will be printed to the console when states change.
+@export var debug_mode: bool = false
+
+## Press "Create" to make a new [SimpleState].
+## Only useful in the editor's inspector, not through code.
+@export_tool_button("Create New SimpleState", "Add")
+var create_simplestate_action: Callable = func():
+	if not Engine.is_editor_hint():
+		return
+	# Make a new simple state if in the editor
+	var new_state: SimpleState = SimpleState.new()
+	new_state.name = "SimpleState"
+	add_child(new_state, true)
+	new_state.set_owner(get_tree().edited_scene_root)
 
 ## The [SimpleState] that is currently active. It must be a child node of the [StateBot].
 ## Changing this directly will trigger a state switch.
@@ -49,16 +49,22 @@ var current_state: SimpleState = null:
 		# Do nothing if the current and new states are the same.
 		if current_state == new_state:
 			if debug_mode:
-				print(str(self) + " tried to switch to the current state, " + str(current_state) +
-				", so nothing happened.")
+				var debug_reference: String = str(puppet) if puppet else str(self)
+				
+				print_rich("[color=c375f0]SB:[/color] (%s) tried to switch to the current state [b]%s[/b]" \
+				% [debug_reference, current_state.name], ", so nothing happened.")
 			return
 		
 		var old_state: SimpleState = current_state
 		
 		# Send a debug message if debug mode is enabled.
 		if debug_mode:
-			print(str(self) + " is switching states from " + str(old_state) + " to " + 
-			str(new_state))
+			var debug_reference: String = str(puppet) if puppet else str(self)
+			
+			if old_state:
+				print_rich("[color=c375f0]SB:[/color] (%s) state: [b]%s[/b] → [b]%s[/b]" % [debug_reference, old_state.name, new_state.name])
+			else:
+				print_rich("[color=c375f0]SB:[/color] (%s) is initializing to state [b]%s[/b]" % [debug_reference, new_state.name])
 		
 		# Exit the old state and enter the new state.
 		# The variable is set after exit and before enter.

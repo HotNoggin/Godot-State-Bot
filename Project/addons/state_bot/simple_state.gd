@@ -1,5 +1,5 @@
 @tool
-@icon("res://addons/state_bot/simple_state_icon.png")
+@icon("res://addons/state_bot/simple_state_icon.svg")
 class_name SimpleState
 ## Contains all of the methods needed to handle everything within the scope of a single state.
 ## Define what happens when a state is activated, deactivated, and while it is active.
