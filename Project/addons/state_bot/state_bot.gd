@@ -27,7 +27,7 @@ signal deactivated()
 
 ## Press "Create" to make a new [SimpleState].
 ## Only useful in the editor's inspector, not through code.
-@export_tool_button("Create New SimpleState", "Add")
+@export_tool_button("Create New SimpleState", "Script")
 var create_simplestate_action: Callable = func():
 	if not Engine.is_editor_hint():
 		return

@@ -626,9 +626,9 @@ zoom = Vector2(3, 3)
 
 [node name="StateBot" type="Node" parent="Player" node_paths=PackedStringArray("puppet", "starting_state")]
 script = ExtResource("7_lc0t7")
-debug_mode = true
 puppet = NodePath("..")
 starting_state = NodePath("Idle")
+debug_mode = true
 metadata/_custom_type_script = "uid://dyiqd8bnrrpd8"
 
 [node name="Idle" type="Node" parent="Player/StateBot"]
