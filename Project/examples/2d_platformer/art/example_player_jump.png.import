@@ -2,22 +2,24 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkrb50jn6yk0e"
-path="res://.godot/imported/bonuses.png-017e502a909ead5716bc8e01b7980882.ctex"
+uid="uid://b7rr5qtf66u0h"
+path="res://.godot/imported/example_player_jump.png-5927015d865370be703e34dabe0d8c04.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/state_bot/bonuses.png"
-dest_files=["res://.godot/imported/bonuses.png-017e502a909ead5716bc8e01b7980882.ctex"]
+source_file="res://examples/2d_platformer/art/example_player_jump.png"
+dest_files=["res://.godot/imported/example_player_jump.png-5927015d865370be703e34dabe0d8c04.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
@@ -25,6 +27,10 @@ mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

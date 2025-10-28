@@ -15,11 +15,14 @@ config/description="A versatile, easy to use finite state machine addon."
 config/version="1.0.1"
 config/tags=PackedStringArray("addon")
 run/main_scene="res://addons/state_bot/example/example_scene.tscn"
-config/features=PackedStringArray("4.2")
+config/features=PackedStringArray("4.5")
 boot_splash/bg_color=Color(0.0745098, 0.0745098, 0.0745098, 1)
-boot_splash/image="res://addons/state_bot/state_bot_icon.png"
-config/icon="res://addons/state_bot/state_bot_icon.png"
 
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/state_bot/plugin.cfg")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
