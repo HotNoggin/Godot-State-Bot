@@ -83,8 +83,9 @@ var current_state: SimpleState = null:
 				print(str(self) + " was deactivated.")
 			deactivated.emit()
 			return
-		
 
+## Cached version of all states. 
+var all_states: Array[SimpleState]
 
 
 func _ready():
@@ -127,32 +128,17 @@ func switch_to_state(state_name: String = "") -> SimpleState:
 ## The first state with the matching name will be returned, So if a child and parent share a name, 
 ## The parent will be returned.
 func get_state(state_name: String = "") -> SimpleState:
-	# Get all of the states for this StateBot.
-	var states: Array[SimpleState] = get_all_states()
-	# Find and return the first SimpleState with a matching name.
-	states = states.filter(func(state):
+	var filtered_states: Array[SimpleState] = all_states.filter(func(state):
 		return state.name == state_name)
-	if states.is_empty():
+	if filtered_states.is_empty():
 		return null
-	return states.front()
+	return filtered_states.front()
 
+func add_state(state: SimpleState):
+	all_states.append(state)
 
-## Returns all [SimpleState]s that are children, grandchildren, or descendents of this [StateBot].
-## This function returns the [SimpleState]s in order from top to bottom in the hierarchy.
-## See also [method Bonuses.get_all_children].
-func get_all_states() -> Array[SimpleState]:
-	# Get all of the children of this StateBot.
-	var states: Array[SimpleState] = []
-	var children: Array[Node] = Bonuses.get_all_children(self)
-	# Don't continue if there are no children.
-	if children.is_empty():
-		push_error("The StateBot has no children, but get_all_states() was called.")
-		return []
-	# Convert the Node array into a SimpleState array and return the entire array.
-	states.assign(children.filter(func(child):
-		return child is SimpleState))
-	return states
-
+func remove_state(state: SimpleState):
+	all_states.erase(state)
 
 ## Triggers a switch to the [member starting_state].
 ## This is the same as setting [member current_state] to [member starting_state].
