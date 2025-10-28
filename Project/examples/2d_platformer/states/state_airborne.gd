@@ -4,7 +4,6 @@ extends SimpleState
 @export var airborne_speed: float = 150
 @export var airborne_acceleration: float = 8
 
-@onready var state_bot: StateBot = get_bot()
 @onready var player: ExamplePlayer = get_bot().puppet
 @onready var animated_sprite: AnimatedSprite2D = %AnimatedSprite2D
 

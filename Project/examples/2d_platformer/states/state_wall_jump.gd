@@ -3,7 +3,6 @@ extends SimpleState
 
 @export var wall_jump_velocity: Vector2 = Vector2(125, -350)
 
-@onready var state_bot: StateBot = get_bot()
 @onready var player: ExamplePlayer = get_bot().puppet
 @onready var animated_sprite: AnimatedSprite2D = %AnimatedSprite2D
 
@@ -34,9 +33,11 @@ func _state_process(delta: float) -> void:
 
 ## Called every physics tick while this state is active.
 func _state_physics_process(delta: float) -> void:
+	# WARNING: You really shouldn't do wall-jumping this way in a real game.
+	# is_on_wall() is very finnicky and unreliable, as you can tell when playtesting.
 	if player.is_on_floor():
 		state_bot.switch_to_state("Idle")
-	elif !player.is_on_wall():
+	elif not player.is_on_wall():
 		state_bot.switch_to_state("Airborne")
 	
 	if Input.is_action_just_pressed("ui_up"):

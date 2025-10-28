@@ -3,7 +3,6 @@ extends SimpleState
 
 @export var jump_height: float = -400
 
-@onready var state_bot: StateBot = get_bot()
 @onready var player: ExamplePlayer = get_bot().puppet
 @onready var animated_sprite: AnimatedSprite2D = %AnimatedSprite2D
 
