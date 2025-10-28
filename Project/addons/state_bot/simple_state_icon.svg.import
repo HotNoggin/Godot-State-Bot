@@ -1,14 +1,14 @@
 [remap]
 
 importer="svg"
-type="DPITexture"
+type="SVGTexture"
 uid="uid://bhui3bu2e21n4"
-path="res://.godot/imported/simple_state_icon.svg-1a3985775a6df73ac402cd4cf45c76d4.dpitex"
+path="res://.godot/imported/simple_state_icon.svg-1a3985775a6df73ac402cd4cf45c76d4.svgtex"
 
 [deps]
 
 source_file="res://addons/state_bot/simple_state_icon.svg"
-dest_files=["res://.godot/imported/simple_state_icon.svg-1a3985775a6df73ac402cd4cf45c76d4.dpitex"]
+dest_files=["res://.godot/imported/simple_state_icon.svg-1a3985775a6df73ac402cd4cf45c76d4.svgtex"]
 
 [params]
 

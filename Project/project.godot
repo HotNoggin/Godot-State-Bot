@@ -14,7 +14,7 @@ config/name="StateBot"
 config/description="A versatile, easy to use finite state machine addon."
 config/version="1.0.1"
 config/tags=PackedStringArray("addon")
-run/main_scene="res://addons/state_bot/example/example_scene.tscn"
+run/main_scene="uid://b73nm4b4g1fjd"
 config/features=PackedStringArray("4.5")
 boot_splash/bg_color=Color(0.0745098, 0.0745098, 0.0745098, 1)
 
