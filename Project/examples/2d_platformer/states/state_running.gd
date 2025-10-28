@@ -3,7 +3,6 @@ extends SimpleState
 
 @export var run_speed: float = 150
 @export var run_acceleration: float = 15
-@export var jump_height: float = -400
 
 @onready var player: ExamplePlayer = get_bot().puppet
 @onready var animated_sprite: AnimatedSprite2D = %AnimatedSprite2D
@@ -49,7 +48,7 @@ func handle_movement() -> void:
 
 func handle_jumping() -> void:
 	if Input.is_action_just_pressed("ui_up"):
-		player.velocity.y = jump_height
+		player.velocity.y = player.jump_height
 		state_bot.switch_to_state("Airborne")
 	
 	if not player.is_on_floor():

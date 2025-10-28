@@ -103,7 +103,6 @@ func switch_to_next(next: SimpleState = next_state) -> SimpleState:
 
 ## Returns [member next_state].
 ## If no [member next_state] is defined, the next state in the hierarchy (top to bottom) is used.
-## See [method StateBot.get_all_states] to see how the next state in the hierarchy is chosen.
 ## This is mostly useful when no [member next_state] has been defined.
 ## Otherwise, using [member next_state] directly is best.
 func get_next() -> SimpleState:
@@ -112,7 +111,7 @@ func get_next() -> SimpleState:
 		return null
 	# If there is no next state, find the next state
 	if not is_instance_valid(next_state):
-		var all_states: Array[SimpleState] = state_bot.get_all_states()
+		var all_states: Array[SimpleState] = state_bot.all_states
 		var current_index: int = all_states.find(state_bot.current_state)
 		var next: SimpleState = all_states[(current_index + 1) % all_states.size()]
 		# Return the next state (from the hierarchy or variable)
