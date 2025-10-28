@@ -49,7 +49,7 @@ var current_state: SimpleState = null:
 		# Do nothing if the current and new states are the same.
 		if current_state == new_state:
 			if debug_mode:
-				var debug_reference: String = str(puppet) if puppet else str(self)
+				var debug_reference: String = str(puppet) if is_instance_valid(puppet) else str(self)
 				
 				print_rich("[color=c375f0]SB:[/color] (%s) tried to switch to the current state [b]%s[/b]" \
 				% [debug_reference, current_state.name], ", so nothing happened.")
@@ -59,9 +59,9 @@ var current_state: SimpleState = null:
 		
 		# Send a debug message if debug mode is enabled.
 		if debug_mode:
-			var debug_reference: String = str(puppet) if puppet else str(self)
+			var debug_reference: String = str(puppet) if is_instance_valid(puppet) else str(self)
 			
-			if old_state:
+			if is_instance_valid(old_state):
 				print_rich("[color=c375f0]SB:[/color] (%s) state: [b]%s[/b] → [b]%s[/b]" % [debug_reference, old_state.name, new_state.name])
 			else:
 				print_rich("[color=c375f0]SB:[/color] (%s) is initializing to state [b]%s[/b]" % [debug_reference, new_state.name])
@@ -84,7 +84,8 @@ var current_state: SimpleState = null:
 			deactivated.emit()
 			return
 
-## Cached version of all states. 
+## Array that contains all [SimpleState] descendants.
+## Elements are added/removed whenever a [SimpleState] descendant enters/exits the tree.
 var all_states: Array[SimpleState]
 
 
@@ -134,11 +135,16 @@ func get_state(state_name: String = "") -> SimpleState:
 		return null
 	return filtered_states.front()
 
+
+## Adds a new state to [member all_states]. Called from [SimpleState] descendants on [method Node._enter_tree].
 func add_state(state: SimpleState):
 	all_states.append(state)
 
+
+## Removes a new state from [member all_states]. Called from [SimpleState] descendants on [method Node._exit_tree].
 func remove_state(state: SimpleState):
 	all_states.erase(state)
+
 
 ## Triggers a switch to the [member starting_state].
 ## This is the same as setting [member current_state] to [member starting_state].

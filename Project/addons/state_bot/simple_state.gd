@@ -16,6 +16,7 @@ signal exited
 ## Found with [method get_bot] and set as soon as this state enters the tree.
 var state_bot: StateBot
 
+
 func _enter_tree():
 	# Detach this script from the node and instead give the developer a new script to work in.
 	if Engine.is_editor_hint():
@@ -25,9 +26,9 @@ func _enter_tree():
 			set_script(new_script.duplicate())
 		return
 	
-	
 	state_bot = get_bot()
 	state_bot.add_state(self)
+
 
 func _exit_tree() -> void:
 	if Engine.is_editor_hint():
@@ -35,6 +36,7 @@ func _exit_tree() -> void:
 	
 	if is_instance_valid(state_bot):
 		state_bot.remove_state(self)
+
 
 ## Called once automatically when this state is entered.
 ## This function is meant to be overridden with the behavior that you want to occur once, 
