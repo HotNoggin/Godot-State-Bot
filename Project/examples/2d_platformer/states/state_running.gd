@@ -31,7 +31,7 @@ func _state_physics_process(delta: float) -> void:
 	player.apply_gravity(delta)
 	player.move_and_slide()
 
-func handle_movement():
+func handle_movement() -> void:
 	var input_vector: float = Input.get_axis("ui_left", "ui_right")
 	
 	if input_vector:
@@ -47,7 +47,7 @@ func handle_movement():
 		elif player.velocity.x > 0:
 			animated_sprite.flip_h = false
 
-func handle_jumping():
+func handle_jumping() -> void:
 	if Input.is_action_just_pressed("ui_up"):
 		player.velocity.y = jump_height
 		state_bot.switch_to_state("Airborne")

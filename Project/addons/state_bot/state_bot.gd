@@ -14,7 +14,7 @@ signal deactivated()
 
 ## A node to control remotely from inside of states. This must be set manually,
 ## either in the inspector or through code.
-## This can be accessed from a [SimpleState] using [member SimpleState.get_bot().puppet]
+## This can be accessed from a [SimpleState] using [member SimpleState.state_bot.puppet]
 @export var puppet: Node = null
 
 ## A single [SimpleState] that is set to be automatically entered on ready, 
@@ -28,7 +28,7 @@ signal deactivated()
 ## Press "Create" to make a new [SimpleState].
 ## Only useful in the editor's inspector, not through code.
 @export_tool_button("Create New SimpleState", "Script")
-var create_simplestate_action: Callable = func():
+var create_simplestate_action: Callable = func() -> void:
 	if not Engine.is_editor_hint():
 		return
 	# Make a new simple state if in the editor
@@ -89,13 +89,13 @@ var current_state: SimpleState = null:
 var all_states: Array[SimpleState]
 
 
-func _ready():
+func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	restart.call_deferred()
 
 
-func _process(delta):
+func _process(delta) -> void:
 	if Engine.is_editor_hint():
 		return
 	
@@ -104,7 +104,7 @@ func _process(delta):
 		current_state._state_process(delta)
 
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	if Engine.is_editor_hint():
 		return
 	
@@ -137,12 +137,12 @@ func get_state(state_name: String = "") -> SimpleState:
 
 
 ## Adds a new state to [member all_states]. Called from [SimpleState] descendants on [method Node._enter_tree].
-func add_state(state: SimpleState):
+func add_state(state: SimpleState) -> void:
 	all_states.append(state)
 
 
 ## Removes a new state from [member all_states]. Called from [SimpleState] descendants on [method Node._exit_tree].
-func remove_state(state: SimpleState):
+func remove_state(state: SimpleState) -> void:
 	all_states.erase(state)
 
 

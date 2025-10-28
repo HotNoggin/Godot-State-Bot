@@ -12,7 +12,6 @@ func _enter_state(_last_state: SimpleState) -> void:
 func _exit_state(_new_state: SimpleState) -> void:
 	pass
 
-
 ## Called every frame while this state is active.
 func _state_process(_delta: float) -> void:
 	pass
@@ -25,13 +24,13 @@ func _state_physics_process(delta: float) -> void:
 	player.apply_gravity(delta)
 	player.move_and_slide()
 
-func handle_movement():
+func handle_movement() -> void:
 	var input_vector: float = Input.get_axis("ui_left", "ui_right")
 	
 	if input_vector != 0:
 		state_bot.switch_to_state("Running")
 
-func handle_jumping():
+func handle_jumping() -> void:
 	if Input.is_action_just_pressed("ui_up"):
 		player.velocity.y = player.jump_height
 		state_bot.switch_to_state("Airborne")

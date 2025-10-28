@@ -35,7 +35,7 @@ func _state_physics_process(delta: float) -> void:
 	player.apply_gravity(delta)
 	player.move_and_slide()
 
-func handle_movement():
+func handle_movement() -> void:
 	var input_vector: float = Input.get_axis("ui_left", "ui_right")
 	
 	if input_vector:
@@ -43,7 +43,7 @@ func handle_movement():
 	else:
 		player.velocity.x = move_toward(player.velocity.x, 0, airborne_acceleration)
 
-func handle_animations():
+func handle_animations() -> void:
 	if player.velocity.y > 0:
 		animated_sprite.play("fall")
 	else:
@@ -54,7 +54,7 @@ func handle_animations():
 	elif player.velocity.x > 0:
 		animated_sprite.flip_h = false
 
-func handle_floor():
+func handle_floor() -> void:
 	if player.is_on_floor():
 		if player.velocity.x:
 			state_bot.switch_to_state("Running")
