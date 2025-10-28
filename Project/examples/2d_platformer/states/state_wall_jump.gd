@@ -9,7 +9,7 @@ extends SimpleState
 var wall_normal: float
 
 ## Called once automatically when this state is entered.
-func _enter_state(last_state: SimpleState) -> void:
+func _enter_state(_last_state: SimpleState) -> void:
 	animated_sprite.play("wall_jump")
 	
 	# Check if you hit the wall is on your left (1) or right (-1)
@@ -22,12 +22,12 @@ func _enter_state(last_state: SimpleState) -> void:
 
 
 ## Called once automatically when this state is exited.
-func _exit_state(new_state: SimpleState) -> void:
+func _exit_state(_new_state: SimpleState) -> void:
 	pass
 
 
 ## Called every frame while this state is active.
-func _state_process(delta: float) -> void:
+func _state_process(_delta: float) -> void:
 	pass
 
 

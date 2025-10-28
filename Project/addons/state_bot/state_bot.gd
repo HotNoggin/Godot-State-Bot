@@ -49,7 +49,7 @@ var current_state: SimpleState = null:
 		# Do nothing if the current and new states are the same.
 		if current_state == new_state:
 			if debug_mode:
-				var debug_reference: String = str(puppet) if puppet else str(self)
+				var debug_reference: String = str(puppet) if is_instance_valid(puppet) else str(self)
 				
 				print_rich("[color=c375f0]SB:[/color] (%s) tried to switch to the current state [b]%s[/b]" \
 				% [debug_reference, current_state.name], ", so nothing happened.")
@@ -59,7 +59,7 @@ var current_state: SimpleState = null:
 		
 		# Send a debug message if debug mode is enabled.
 		if debug_mode:
-			var debug_reference: String = str(puppet) if puppet else str(self)
+			var debug_reference: String = str(puppet) if is_instance_valid(puppet) else str(self)
 			
 			if old_state:
 				print_rich("[color=c375f0]SB:[/color] (%s) state: [b]%s[/b] → [b]%s[/b]" % [debug_reference, old_state.name, new_state.name])
@@ -84,7 +84,8 @@ var current_state: SimpleState = null:
 			deactivated.emit()
 			return
 
-## Cached version of all states. 
+## Cached version of all [SimpleState]s managed by this [StateBot].
+## This variable is updated every time a [SimpleState] descendant enters or exits the tree.
 var all_states: Array[SimpleState]
 
 
