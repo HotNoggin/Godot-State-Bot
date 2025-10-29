@@ -14,7 +14,7 @@ signal deactivated()
 
 ## A node to control remotely from inside of states. This must be set manually,
 ## either in the inspector or through code.
-## This can be accessed from a [SimpleState] using [member SimpleState.get_bot().puppet]
+## This can be accessed from a [SimpleState] using [member SimpleState.state_bot.puppet]
 @export var puppet: Node = null
 
 ## A single [SimpleState] that is set to be automatically entered on ready, 
@@ -28,7 +28,7 @@ signal deactivated()
 ## Press "Create" to make a new [SimpleState].
 ## Only useful in the editor's inspector, not through code.
 @export_tool_button("Create New SimpleState", "Script")
-var create_simplestate_action: Callable = func():
+var create_simplestate_action: Callable = func() -> void:
 	if not Engine.is_editor_hint():
 		return
 	# Make a new simple state if in the editor
@@ -49,7 +49,7 @@ var current_state: SimpleState = null:
 		# Do nothing if the current and new states are the same.
 		if current_state == new_state:
 			if debug_mode:
-				var debug_reference: String = str(puppet) if puppet else str(self)
+				var debug_reference: String = str(puppet) if is_instance_valid(puppet) else str(self)
 				
 				print_rich("[color=c375f0]SB:[/color] (%s) tried to switch to the current state [b]%s[/b]" \
 				% [debug_reference, current_state.name], ", so nothing happened.")
@@ -59,9 +59,9 @@ var current_state: SimpleState = null:
 		
 		# Send a debug message if debug mode is enabled.
 		if debug_mode:
-			var debug_reference: String = str(puppet) if puppet else str(self)
+			var debug_reference: String = str(puppet) if is_instance_valid(puppet) else str(self)
 			
-			if old_state:
+			if is_instance_valid(old_state):
 				print_rich("[color=c375f0]SB:[/color] (%s) state: [b]%s[/b] → [b]%s[/b]" % [debug_reference, old_state.name, new_state.name])
 			else:
 				print_rich("[color=c375f0]SB:[/color] (%s) is initializing to state [b]%s[/b]" % [debug_reference, new_state.name])
@@ -84,17 +84,18 @@ var current_state: SimpleState = null:
 			deactivated.emit()
 			return
 
-## Cached version of all states. 
+## Array that contains all [SimpleState] descendants.
+## Elements are added/removed whenever a [SimpleState] descendant enters/exits the tree.
 var all_states: Array[SimpleState]
 
 
-func _ready():
+func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	restart.call_deferred()
 
 
-func _process(delta):
+func _process(delta) -> void:
 	if Engine.is_editor_hint():
 		return
 	
@@ -103,7 +104,7 @@ func _process(delta):
 		current_state._state_process(delta)
 
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	if Engine.is_editor_hint():
 		return
 	
@@ -134,11 +135,16 @@ func get_state(state_name: String = "") -> SimpleState:
 		return null
 	return filtered_states.front()
 
-func add_state(state: SimpleState):
+
+## Adds a new state to [member all_states]. Called from [SimpleState] descendants on [method Node._enter_tree].
+func add_state(state: SimpleState) -> void:
 	all_states.append(state)
 
-func remove_state(state: SimpleState):
+
+## Removes a new state from [member all_states]. Called from [SimpleState] descendants on [method Node._exit_tree].
+func remove_state(state: SimpleState) -> void:
 	all_states.erase(state)
+
 
 ## Triggers a switch to the [member starting_state].
 ## This is the same as setting [member current_state] to [member starting_state].

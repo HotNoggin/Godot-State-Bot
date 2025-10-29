@@ -5,5 +5,5 @@ class_name ExamplePlayer
 
 @export var jump_height: float = -400
 
-func apply_gravity(delta: float):
+func apply_gravity(delta: float) -> void:
 	velocity.y += get_gravity().y * delta

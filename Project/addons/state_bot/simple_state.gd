@@ -16,6 +16,7 @@ signal exited
 ## Found with [method get_bot] and set as soon as this state enters the tree.
 var state_bot: StateBot
 
+
 func _enter_tree():
 	# Detach this script from the node and instead give the developer a new script to work in.
 	if Engine.is_editor_hint():
@@ -25,9 +26,9 @@ func _enter_tree():
 			set_script(new_script.duplicate())
 		return
 	
-	
 	state_bot = get_bot()
 	state_bot.add_state(self)
+
 
 func _exit_tree() -> void:
 	if Engine.is_editor_hint():
@@ -35,6 +36,7 @@ func _exit_tree() -> void:
 	
 	if is_instance_valid(state_bot):
 		state_bot.remove_state(self)
+
 
 ## Called once automatically when this state is entered.
 ## This function is meant to be overridden with the behavior that you want to occur once, 
@@ -101,7 +103,6 @@ func switch_to_next(next: SimpleState = next_state) -> SimpleState:
 
 ## Returns [member next_state].
 ## If no [member next_state] is defined, the next state in the hierarchy (top to bottom) is used.
-## See [method StateBot.get_all_states] to see how the next state in the hierarchy is chosen.
 ## This is mostly useful when no [member next_state] has been defined.
 ## Otherwise, using [member next_state] directly is best.
 func get_next() -> SimpleState:
@@ -110,7 +111,7 @@ func get_next() -> SimpleState:
 		return null
 	# If there is no next state, find the next state
 	if not is_instance_valid(next_state):
-		var all_states: Array[SimpleState] = state_bot.get_all_states()
+		var all_states: Array[SimpleState] = state_bot.all_states
 		var current_index: int = all_states.find(state_bot.current_state)
 		var next: SimpleState = all_states[(current_index + 1) % all_states.size()]
 		# Return the next state (from the hierarchy or variable)
